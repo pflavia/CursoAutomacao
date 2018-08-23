@@ -98,9 +98,33 @@ public class WebElementTest {
 		listboxselements.selectByIndex(3);
 		listboxselements.selectByIndex(4);
 		
+		
+		if(listboxselements.isMultiple()) {
+			listboxselements.selectByIndex(4);
+			listboxselements.selectByIndex(7);
+			listboxselements.selectByIndex(8);
+		}
+		
+		
+		
+		
 		Thread.sleep(3000);
 	
 		assertTrue("Item 4 selecionado", allListboxselements.get(3).isSelected() && allListboxselements.get(4).isSelected() );
 		
 	}
+	
+	
+	@Test
+	public void testValidaFrameTargettrust() throws InterruptedException {
+	driver.switchTo().frame(1);
+	driver.switchTo().defaultContent();
+	driver.switchTo().frame("iframe_b");
+	WebElement campoBusca = driver.findElement(By.id("s"));
+	campoBusca.sendKeys("Flávia");
+	
+	assertEquals("Nome não é o esperado","Flávia", campoBusca.getAttribute("value"));
+	}
+	
+		
 }
