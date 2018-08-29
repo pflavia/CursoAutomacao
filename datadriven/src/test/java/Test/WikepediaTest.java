@@ -3,6 +3,7 @@ package Test;
 import org.testng.annotations.Test;
 
 import com.utils.SpreadsheetData;
+import com.utils.WebDriverUtils;
 
 import Page.WikepediaPage;
 
@@ -24,16 +25,16 @@ import org.testng.annotations.DataProvider;
 public class WikepediaTest {
 	public WebDriver driver;
 
-	@BeforeMethod
+	@BeforeTest
 	public void setUp() throws Exception {
-		System.setProperty("webdriver.chrome.driver",
-				"C:\\Drivers\\chromedriver.exe");
-		driver = new ChromeDriver();
+//		System.setProperty("webdriver.chrome.driver",
+//				"C:\\Drivers\\chromedriver.exe");
+		driver = WebDriverUtils.getDriver(WebDriverUtils.getSeleniumProperties("selenium.browser")); 
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.get("https://en.wikipedia.org/wiki/Main_Page");
 	}
 
-	@AfterMethod
+	@AfterTest
 	public void tearDown() throws Exception {
 		driver.quit();
 	}
@@ -41,10 +42,10 @@ public class WikepediaTest {
 
 	
 	@Test(dataProvider = "dbPaises")
-	public void testPesquisaWike(String nome) {
+	public void testPesquisaWike(String nome) throws InterruptedException {
 		WikepediaPage wikepedia = new WikepediaPage(driver);
 		wikepedia.pesquisar(nome);
-		assertEquals( wikepedia.tituloTela(), nome,"Não pesquisou pelo pais certo");
+		assertEquals( wikepedia.tituloTela(), nome + " - Wikipedia","Não pesquisou pelo pais certo");
 	}
 
 

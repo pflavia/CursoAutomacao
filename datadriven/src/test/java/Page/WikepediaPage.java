@@ -11,14 +11,15 @@ public class WikepediaPage {
 		this.driver = driver;
 	}
 
-	public WikepediaPage pesquisar (String campoPesquisa) {
+	public WikepediaPage pesquisar (String campoPesquisa) throws InterruptedException {
 		driver.findElement(By.id("searchInput")).sendKeys(campoPesquisa);
+		//Thread.sleep(4000);
 		driver.findElement(By.id("searchButton")).click();
 		return this;
 	}
 
 	public String tituloTela () {
-		return driver.findElement(By.id("firstHeading")).getAttribute("value");
+		return driver.getTitle();
 
 
 	}
